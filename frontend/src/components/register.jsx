@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Input } from '../inputs';
 import { register } from '../redux/auth';
 
 const Register = () => {
@@ -51,58 +52,23 @@ const Register = () => {
           )}
           <div className="form-group">
             <label htmlFor="first_name">First Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="firstName"
-              placeholder="Enter Your First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
+            <Input name="firstName" placeholder="Enter Your First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="last_name">Last Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="lastName"
-              placeholder="Enter your last name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
+            <Input name="lastName" placeholder="Enter Your Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="phone_number">Phone Number</label>
-            <input
-              type="text"
-              className="form-control"
-              name="phoneNumber"
-              placeholder="Enter your phone number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+            <Input name="phoneNumber" placeholder="Enter Your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="username">UserName</label>
-            <input
-              type="text"
-              className="form-control"
-              name="userName"
-              placeholder="Enter Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <Input name="userName" placeholder="Enter Username" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <Input name="password" type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
 
           <button type="submit" className="btn btn-lg btn-primary btn-block mb-2">
