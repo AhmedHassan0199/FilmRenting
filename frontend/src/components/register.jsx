@@ -27,11 +27,11 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (firstName && lastName && phoneNumber && username && password) {
+      const values = { firstName, lastName, phoneNumber, username, password };
       dispatch(register(values));
     } else {
       setErrorMsg('Missing fields, please try again');
     }
-    const values = { firstName, lastName, phoneNumber, username, password };
   };
 
   return (
