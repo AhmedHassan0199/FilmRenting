@@ -1,5 +1,6 @@
-import { types, login } from "./action";
+import { types, login, register } from "./action";
 import jwt_decode from "jwt-decode";
+
 const initState = {
   isAuthenticated: false,
   user: {},
@@ -18,11 +19,23 @@ export default function auth(state = initState, action) {
   console.log(action.type);
   switch (action.type) {
     case types.REGISTER:
-      state.register.successMsg = action.payload;
-      return state;
+      return {
+        ...state,
+        register: { ...register, successMsg: "Registered successfully" },
+      };
     case types.REGISTER_FAILURE:
-      state.register.errorMsg = action.payload;
-      return state;
+      var str = action.payload;
+      console.log(str);
+      var ErrorMsg;
+      if (JSON.stringify(str).includes("409")) {
+        ErrorMsg = "Username Already Exists";
+      } else {
+        ErrorMsg = "Something Went Wrong , please try again";
+      }
+      return {
+        ...state,
+        register: { ...register, errorMsg: ErrorMsg },
+      };
     case types.LOGIN:
       localStorage.setItem("usertoken", action.payload);
       var userdata = jwt_decode(action.payload);
@@ -33,9 +46,10 @@ export default function auth(state = initState, action) {
         login: { ...login, successMsg: "Login successful" },
       };
     case types.LOGIN_FAILURE:
-      console.log("ERROR : " + action.payload);
-      state.login.errorMsg = action.payload;
-      return state;
+      return {
+        ...state,
+        login: { ...login, errorMsg: "Incorrect Username or password" },
+      };
     default:
       return state;
   }

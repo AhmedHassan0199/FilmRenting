@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const Input = ({
+  ref,
   htmlFor,
   name,
   type,
@@ -12,6 +13,7 @@ export const Input = ({
 }) => {
   return (
     <input
+      ref={ref}
       htmlFor={htmlFor}
       type={type || "text"}
       className={`form-control ${className}`}

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "../inputs";
 import { register } from "../redux/auth";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const { registerForm, handleSubmit, watch, errors } = useForm();
   const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
@@ -38,7 +40,7 @@ const Register = () => {
   return (
     <div className="container">
       <div className="col-md-6 mt-2 mx-auto">
-        <form noValidate onSubmit={onSubmit}>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <h1 className="h3 mb-3 font-weight-normal">Register</h1>
           {errorMsg && (
             <div className="alert alert-danger" role="alert">
@@ -56,6 +58,7 @@ const Register = () => {
               name="firstName"
               placeholder="Enter Your First Name"
               value={firstName}
+              ref={registerForm({ required: false })}
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>

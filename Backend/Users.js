@@ -1,10 +1,15 @@
-const express = require("express");
+const express = require("./node_modules/express");
 const users = express.Router();
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const { ALREADY_EXIST, BAD_REQUEST } = require("./utils/httpCodes");
+const jwt = require("./node_modules/jsonwebtoken");
+const bcrypt = require("./node_modules/bcrypt/bcrypt");
+const {
+  ALREADY_EXIST,
+  BAD_REQUEST,
+  AUTHORIZATION_ERROR,
+  GOOD_REQUEST,
+} = require("./utils/httpCodes");
 const keys = require("./utils/keys");
-const User = require("./Models/User");
+const User = require("./models/user");
 
 users.post("/register", (req, res) => {
   const userData = {
@@ -24,7 +29,9 @@ users.post("/register", (req, res) => {
           userData.password = hash;
           User.create(userData)
             .then((user) => {
-              res.status(200).json({ status: user.username + " registered" });
+              res
+                .status(GOOD_REQUEST)
+                .json({ status: user.username + " registered" });
             })
             .catch((err) => {
               res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
@@ -54,18 +61,20 @@ users.post("/login", (req, res) => {
             phoneNumber: user.phoneNumber,
           };
           let token = jwt.sign(Data, keys.jwtSecretKey, {
-            expiresIn: 1500,
+            expiresIn: keys.jwtExpiresIn,
           });
-          res.status(200).json(token);
+          res.status(GOOD_REQUEST).json(token);
         } else {
-          res.status(306).json({ error: "Wrong Password" });
+          res.status(AUTHORIZATION_ERROR).json({ error: "Wrong Password" });
         }
       } else {
-        res.status(306).json({ error: "Wrong username or password" });
+        res
+          .status(AUTHORIZATION_ERROR)
+          .json({ error: "Wrong username or password" });
       }
     })
     .catch((err) => {
-      res.status(306).json({ error: "Something Went Wrong" });
+      res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
     });
 });
 
@@ -82,11 +91,11 @@ users.post("/profile", (req, res) => {
       if (user) {
         res.json(user);
       } else {
-        res.status(401).json({ error: "User doesnt exist" });
+        res.status(AUTHORIZATION_ERROR).json({ error: "User doesnt exist" });
       }
     })
     .catch((err) => {
-      res.status(401).json({ error: "Something Went Wrong" });
+      res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
     });
 });
 

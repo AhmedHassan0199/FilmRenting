@@ -15,12 +15,12 @@ const Login = () => {
   useEffect(() => {
     if (loginStore.successMsg) {
       setSuccessMsg(loginStore.successMsg);
+      setErrorMsg(null);
       setTimeout(function () {
         //Go to profile
         window.location.href = "/profile";
         //
       }, 2000);
-      setErrorMsg(null);
     } else if (loginStore.errorMsg) {
       setErrorMsg(loginStore.errorMsg);
       setSuccessMsg(null);

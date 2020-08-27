@@ -9,8 +9,6 @@ export const types = {
 };
 
 export const register = (values) => async (dispatch) => {
-  console.log("values", values);
-
   axios
     .post(`${ACCOUNT_SERVICE_URI}/users/register`, values)
     .then((response) =>
@@ -19,13 +17,12 @@ export const register = (values) => async (dispatch) => {
     .catch((err) =>
       dispatch({
         type: types.REGISTER_FAILURE,
-        payload: err.error,
+        payload: err,
       })
     );
 };
 
 export const login = (values) => async (dispatch) => {
-  console.log("values", values);
   axios
     .post(`${ACCOUNT_SERVICE_URI}/users/login`, values)
     .then((response) => {
@@ -34,20 +31,6 @@ export const login = (values) => async (dispatch) => {
     .catch((err) => {
       dispatch({
         type: types.LOGIN_FAILURE,
-        payload: err,
-      });
-    });
-};
-
-export const profile = () => async (dispatch) => {
-  axios
-    .post(`${ACCOUNT_SERVICE_URI}/users/profile`)
-    .then((response) => {
-      dispatch({ type: types.PORFILE, payload: response.data });
-    })
-    .catch((err) => {
-      dispatch({
-        type: types.PROFILE_FAILURE,
         payload: err,
       });
     });
