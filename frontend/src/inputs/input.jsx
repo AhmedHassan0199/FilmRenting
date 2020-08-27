@@ -1,18 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-export const Input = ({ type, name, className, placeholder, label, errors, register, required }) => {
+export const Input = ({
+  type,
+  name,
+  className,
+  placeholder,
+  label,
+  errors,
+  register,
+  required,
+  minLength,
+}) => {
   const error = errors[name]?.message;
-  const inputClassName = error ? 'form-control is-invalid' : 'form-control';
+  const inputClassName = error ? "form-control is-invalid" : "form-control";
   return (
     <>
       {label && <label>{label}</label>}
       <input
         name={name}
-        type={type || 'text'}
+        type={type || "text"}
         className={`${inputClassName} ${className}`}
-        placeholder={placeholder || ''}
-        ref={register({ required })}
+        placeholder={placeholder || ""}
+        ref={register({ required, minLength })}
       />
       <div className="invalid-feedback d-block">{error}</div>
     </>

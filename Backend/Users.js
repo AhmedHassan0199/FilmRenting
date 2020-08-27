@@ -27,6 +27,7 @@ users.post("/register", (req, res) => {
       if (!user) {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           userData.password = hash;
+          console.log(userData);
           User.create(userData)
             .then((user) => {
               res

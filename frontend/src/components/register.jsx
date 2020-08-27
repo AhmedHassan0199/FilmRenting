@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input } from '../inputs';
-import { registration } from '../redux/auth';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Input } from "../inputs";
+import { registration } from "../redux/auth";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const { register, handleSubmit, watch, errors, getValues, formState } = useForm({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+  const {
+    register,
+    handleSubmit,
+    // eslint-disable-next-line
+    watch,
+    errors,
+    // eslint-disable-next-line
+    getValues,
+    formState,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
   const dispatch = useDispatch();
-  console.log('getValues', errors, getValues());
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const registerStore = useSelector(({ auth }) => auth.register);
 
   useEffect(() => {
@@ -53,26 +61,61 @@ const Register = () => {
             </div>
           )}
           <div className="form-group">
-            <Input name="firstName" placeholder="First Name" label="First Name" errors={errors} register={register} required={'Required!'} />
-          </div>
-          {/* <div className="form-group">
-            <label htmlFor="last_name">Last Name</label>
-            <Input name="lastName" placeholder="Enter Your Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="phone_number">Phone Number</label>
-            <Input name="phoneNumber" placeholder="Enter Your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="username">UserName</label>
-            <Input name="userName" placeholder="Enter Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <Input
+              name="firstName"
+              placeholder="First Name"
+              label="First Name"
+              errors={errors}
+              register={register}
+              required={"Required!"}
+            />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Input name="password" type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div> */}
+            <Input
+              name="lastName"
+              placeholder="Enter Your Last Name"
+              label="Last Name"
+              errors={errors}
+              register={register}
+              required={"Required!"}
+            />
+          </div>
+          <div className="form-group">
+            <Input
+              name="phoneNumber"
+              placeholder="Enter Your phone number"
+              label="Phone Number"
+              errors={errors}
+              register={register}
+              required={"Required!"}
+            />
+          </div>
+          <div className="form-group">
+            <Input
+              name="username"
+              placeholder="Enter Username"
+              label="Username"
+              errors={errors}
+              register={register}
+              required={"Required!"}
+            />
+          </div>
+          <div className="form-group">
+            <Input
+              name="password"
+              type="password"
+              placeholder="Enter password"
+              label="Password"
+              errors={errors}
+              register={register}
+              required={"Required!"}
+            />
+          </div>
 
-          <button type="submit" className="btn btn-lg btn-primary btn-block mb-2">
+          <button
+            type="submit"
+            className="btn btn-lg btn-primary btn-block mb-2"
+          >
             Register
           </button>
         </form>

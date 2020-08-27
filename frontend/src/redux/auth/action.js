@@ -1,17 +1,19 @@
-import axios from 'axios';
-import { ACCOUNT_SERVICE_URI } from '../../utils';
+import axios from "axios";
+import { ACCOUNT_SERVICE_URI } from "../../utils";
 
 export const types = {
-  REGISTER: 'REGISTER',
-  REGISTER_FAILURE: 'REGISTER_FAILURE',
-  LOGIN: 'LOGIN',
-  LOGIN_FAILURE: 'LOGIN_FAILURE',
+  REGISTER: "REGISTER",
+  REGISTER_FAILURE: "REGISTER_FAILURE",
+  LOGIN: "LOGIN",
+  LOGIN_FAILURE: "LOGIN_FAILURE",
 };
 
 export const registration = (values) => async (dispatch) => {
   axios
     .post(`${ACCOUNT_SERVICE_URI}/users/register`, values)
-    .then((response) => dispatch({ type: types.REGISTER, payload: response.data }))
+    .then((response) =>
+      dispatch({ type: types.REGISTER, payload: response.data })
+    )
     .catch((err) =>
       dispatch({
         type: types.REGISTER_FAILURE,
