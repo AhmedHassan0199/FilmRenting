@@ -2,7 +2,7 @@ const express = require('express');
 const users = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { ALREADY_EXIST, BAD_REQUEST } = require('./utils//httpCodes');
+const { ALREADY_EXIST, BAD_REQUEST } = require('./utils/httpCodes');
 
 const User = require('./Models/User');
 
