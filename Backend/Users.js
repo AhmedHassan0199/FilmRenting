@@ -3,7 +3,7 @@ const users = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { ALREADY_EXIST, BAD_REQUEST } = require("./utils/httpCodes");
-
+const keys = require("./utils/keys");
 const User = require("./Models/User");
 
 users.post("/register", (req, res) => {
@@ -53,7 +53,7 @@ users.post("/login", (req, res) => {
             lastName: user.lastName,
             phoneNumber: user.phoneNumber,
           };
-          let token = jwt.sign(Data, process.env.SECRET_KEY, {
+          let token = jwt.sign(Data, keys.jwtSecretKey, {
             expiresIn: 1500,
           });
           res.status(200).json(token);
