@@ -1,36 +1,28 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export const Input = ({
-  ref,
-  htmlFor,
-  name,
-  type,
-  className,
-  placeholder,
-  value,
-  onChange,
-}) => {
+export const Input = ({ type, name, className, placeholder, label, errors, register, required }) => {
+  const error = errors[name]?.message;
+  const inputClassName = error ? 'form-control is-invalid' : 'form-control';
   return (
-    <input
-      ref={ref}
-      htmlFor={htmlFor}
-      type={type || "text"}
-      className={`form-control ${className}`}
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-    />
+    <>
+      {label && <label>{label}</label>}
+      <input
+        name={name}
+        type={type || 'text'}
+        className={`${inputClassName} ${className}`}
+        placeholder={placeholder || ''}
+        ref={register({ required })}
+      />
+      <div className="invalid-feedback d-block">{error}</div>
+    </>
   );
 };
 
 Input.propTypes = {
-  htmlFor: PropTypes.string,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   className: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
+  // register: PropTypes.func,
 };
