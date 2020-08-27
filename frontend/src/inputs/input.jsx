@@ -24,5 +24,7 @@ Input.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
   placeholder: PropTypes.string,
-  // register: PropTypes.func,
+  label: PropTypes.string,
+  errors: PropTypes.object,
+  register: PropTypes.func,
 };
