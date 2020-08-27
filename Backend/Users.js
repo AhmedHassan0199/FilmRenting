@@ -1,18 +1,18 @@
-const express = require('express');
+const express = require("express");
 const users = express.Router();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const { ALREADY_EXIST, BAD_REQUEST } = require('./utils/httpCodes');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const { ALREADY_EXIST, BAD_REQUEST } = require("./utils/httpCodes");
 
-const User = require('./Models/User');
+const User = require("./Models/User");
 
-users.post('/register', (req, res) => {
+users.post("/register", (req, res) => {
   const userData = {
-    first_name: req.body.firstName,
-    last_name: req.body.lastName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     username: req.body.username,
     password: req.body.password,
-    phone_Number: req.body.phoneNumber,
+    phoneNumber: req.body.phoneNumber,
   };
 
   User.findOne({
@@ -24,27 +24,27 @@ users.post('/register', (req, res) => {
           userData.password = hash;
           User.create(userData)
             .then((user) => {
-              res.status(200).json({ status: user.username + ' registered' });
+              res.status(200).json({ status: user.username + " registered" });
             })
             .catch((err) => {
-              res.status(BAD_REQUEST).json({ error: 'Something Went Wrong' });
+              res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
             });
         });
       } else {
-        res.status(ALREADY_EXIST).json({ error: 'User already exists' });
+        res.status(ALREADY_EXIST).json({ error: "User already exists" });
       }
     })
     .catch((err) => {
-      res.status(BAD_REQUEST).json({ error: 'Something Went Wrong' });
+      res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
     });
 });
 
-users.post('/login', (req, res) => {
+users.post("/login", (req, res) => {
   User.findOne({
     username: req.body.username,
   })
     .then((user) => {
-      console.log('USER :' + user);
+      console.log("USER :" + user);
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const Data = {
@@ -58,19 +58,22 @@ users.post('/login', (req, res) => {
           });
           res.status(200).json(token);
         } else {
-          res.status(306).json({ error: 'Wrong Password' });
+          res.status(306).json({ error: "Wrong Password" });
         }
       } else {
-        res.status(306).json({ error: 'Wrong username or password' });
+        res.status(306).json({ error: "Wrong username or password" });
       }
     })
     .catch((err) => {
-      res.status(306).json({ error: 'Something Went Wrong' });
+      res.status(306).json({ error: "Something Went Wrong" });
     });
 });
 
-users.post('/profile', (req, res) => {
-  var Decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+users.post("/profile", (req, res) => {
+  var Decoded = jwt.verify(
+    req.headers["authorization"],
+    process.env.SECRET_KEY
+  );
 
   User.findOne({
     _id: Decoded._id,
@@ -79,11 +82,11 @@ users.post('/profile', (req, res) => {
       if (user) {
         res.json(user);
       } else {
-        res.status(401).json({ error: 'User doesnt exist' });
+        res.status(401).json({ error: "User doesnt exist" });
       }
     })
     .catch((err) => {
-      res.status(401).json({ error: 'Something Went Wrong' });
+      res.status(401).json({ error: "Something Went Wrong" });
     });
 });
 

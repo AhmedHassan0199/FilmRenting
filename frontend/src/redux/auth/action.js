@@ -29,13 +29,25 @@ export const login = (values) => async (dispatch) => {
   axios
     .post(`${ACCOUNT_SERVICE_URI}/users/login`, values)
     .then((response) => {
-      console.log(response.data);
       dispatch({ type: types.LOGIN, payload: response.data });
     })
     .catch((err) => {
-      console.log("RESPONSE: " + err);
       dispatch({
         type: types.LOGIN_FAILURE,
+        payload: err,
+      });
+    });
+};
+
+export const profile = () => async (dispatch) => {
+  axios
+    .post(`${ACCOUNT_SERVICE_URI}/users/profile`)
+    .then((response) => {
+      dispatch({ type: types.PORFILE, payload: response.data });
+    })
+    .catch((err) => {
+      dispatch({
+        type: types.PROFILE_FAILURE,
         payload: err,
       });
     });

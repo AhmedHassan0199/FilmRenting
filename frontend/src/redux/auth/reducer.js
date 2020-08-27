@@ -24,14 +24,16 @@ export default function auth(state = initState, action) {
       state.register.errorMsg = action.payload;
       return state;
     case types.LOGIN:
+      localStorage.setItem("usertoken", action.payload);
+      var userdata = jwt_decode(action.payload);
       return {
         ...state,
         isAuthenticated: true,
-        user: jwt_decode(action.payload),
-        login: { ...login, errorMsg: "Login successful" },
+        user: userdata,
+        login: { ...login, successMsg: "Login successful" },
       };
     case types.LOGIN_FAILURE:
-      console.log(action.payload);
+      console.log("ERROR : " + action.payload);
       state.login.errorMsg = action.payload;
       return state;
     default:
