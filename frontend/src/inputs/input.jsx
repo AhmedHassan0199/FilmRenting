@@ -11,6 +11,8 @@ export const Input = ({
   register,
   required,
   minLength,
+  readOnly = false,
+  value,
 }) => {
   const error = errors[name]?.message;
   const inputClassName = error ? "form-control is-invalid" : "form-control";
@@ -18,6 +20,8 @@ export const Input = ({
     <>
       {label && <label>{label}</label>}
       <input
+        value={value}
+        readOnly={readOnly}
         name={name}
         type={type || "text"}
         className={`${inputClassName} ${className}`}

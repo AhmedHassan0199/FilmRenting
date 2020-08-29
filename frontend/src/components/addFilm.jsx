@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
 import { Input } from "../inputs";
-import { registration } from "../redux/auth";
+import { addFilm } from "../redux/auth";
 import { useForm } from "react-hook-form";
 
-const addFilm = () => {
+const AddFilm = () => {
   const {
     register,
     handleSubmit,
@@ -18,25 +19,27 @@ const addFilm = () => {
     mode: "onChange",
     reValidateMode: "onChange",
   });
+  const decoded = jwt_decode(localStorage.usertoken);
+  var username = decoded.username;
   const dispatch = useDispatch();
 
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const registerStore = useSelector(({ auth }) => auth.register);
+  const addFilmStore = useSelector(({ auth }) => auth.addFilm);
 
   useEffect(() => {
-    if (registerStore.successMsg) {
-      setSuccessMsg(registerStore.successMsg);
+    if (addFilmStore.successMsg) {
+      setSuccessMsg(addFilmStore.successMsg);
       setErrorMsg(null);
-    } else if (registerStore.errorMsg) {
-      setErrorMsg(registerStore.errorMsg);
+    } else if (addFilmStore.errorMsg) {
+      setErrorMsg(addFilmStore.errorMsg);
       setSuccessMsg(null);
     }
-  }, [registerStore.successMsg, registerStore.errorMsg]);
+  }, [addFilmStore.successMsg, addFilmStore.errorMsg]);
 
   const onSubmit = (formData) => {
     if (formState.isValid) {
-      dispatch(registration(formData));
+      dispatch(addFilm(formData));
     }
   };
 
@@ -44,7 +47,9 @@ const addFilm = () => {
     <div className="container">
       <div className="col-md-6 mt-2 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="h3 mb-3 font-weight-normal">Register</h1>
+          <h1 className="h3 mb-3 font-weight-normal">
+            Create a new film for rent
+          </h1>
           {errorMsg && (
             <div className="alert alert-danger" role="alert">
               {errorMsg}
@@ -57,9 +62,9 @@ const addFilm = () => {
           )}
           <div className="form-group">
             <Input
-              name="firstName"
-              placeholder="First Name"
-              label="First Name"
+              name="filmTitle"
+              placeholder="Enter the Film Title"
+              label="Film Title"
               errors={errors}
               register={register}
               required={"Required!"}
@@ -67,9 +72,10 @@ const addFilm = () => {
           </div>
           <div className="form-group">
             <Input
-              name="lastName"
-              placeholder="Enter Your Last Name"
-              label="Last Name"
+              name="price"
+              placeholder="Enter the film price"
+              label="Film Price"
+              type="Number"
               errors={errors}
               register={register}
               required={"Required!"}
@@ -77,9 +83,9 @@ const addFilm = () => {
           </div>
           <div className="form-group">
             <Input
-              name="phoneNumber"
-              placeholder="Enter Your phone number"
-              label="Phone Number"
+              name="genre"
+              placeholder="Enter the genre"
+              label="Genre"
               errors={errors}
               register={register}
               required={"Required!"}
@@ -87,23 +93,24 @@ const addFilm = () => {
           </div>
           <div className="form-group">
             <Input
-              name="username"
-              placeholder="Enter Username"
-              label="Username"
+              name="initialRealease"
+              placeholder="Released"
+              label="Release Date"
               errors={errors}
+              type="date"
               register={register}
               required={"Required!"}
             />
           </div>
           <div className="form-group">
             <Input
-              name="password"
-              type="password"
+              name="createdBy"
               placeholder="Enter password"
-              label="Password"
+              label="Created By"
+              readOnly={true}
               errors={errors}
-              minLength={8}
               register={register}
+              value={username}
               required={"Required!"}
             />
           </div>
@@ -112,7 +119,7 @@ const addFilm = () => {
             type="submit"
             className="btn btn-lg btn-primary btn-block mb-2"
           >
-            Register
+            Add Film
           </button>
         </form>
       </div>
@@ -120,4 +127,4 @@ const addFilm = () => {
   );
 };
 
-export default Register;
+export default AddFilm;

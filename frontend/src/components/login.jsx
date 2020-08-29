@@ -30,7 +30,7 @@ const Login = () => {
       setErrorMsg(null);
       setTimeout(function () {
         //Go to profile
-        window.location.href = "/profile";
+        window.location.href = "/addFilm";
         //
       }, 2000);
     } else if (loginStore.errorMsg) {

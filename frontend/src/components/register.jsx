@@ -18,6 +18,7 @@ const Register = () => {
     mode: "onChange",
     reValidateMode: "onChange",
   });
+
   const dispatch = useDispatch();
 
   const [errorMsg, setErrorMsg] = useState("");

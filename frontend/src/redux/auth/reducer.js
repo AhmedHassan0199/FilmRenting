@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 const initState = {
   isAuthenticated: false,
   user: {},
+  film: {},
   register: {
     data: null,
     successMsg: null,
@@ -13,10 +14,13 @@ const initState = {
     successMsg: null,
     errorMsg: null,
   },
+  addFilm: {
+    successMsg: null,
+    errorMsg: null,
+  },
 };
 
 export default function auth(state = initState, action) {
-  console.log(action.type);
   switch (action.type) {
     case types.REGISTER:
       return {
@@ -50,6 +54,24 @@ export default function auth(state = initState, action) {
         ...state,
         login: { ...state.login, errorMsg: "Incorrect Username or password" },
       };
+    case types.FILM_ADDED:
+      return {
+        ...state,
+        film: action.payload,
+        addFilm: {
+          ...state.addingFilm,
+          successMsg: "Film Added",
+        },
+      };
+    case types.FILM_NOT_ADDED:
+      return {
+        ...state,
+        addFilm: {
+          ...state.addingFilm,
+          errorMsg: "Film not added , Something went wrong",
+        },
+      };
+
     default:
       return state;
   }
