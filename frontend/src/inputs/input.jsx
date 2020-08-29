@@ -22,7 +22,7 @@ export const Input = ({
         type={type || "text"}
         className={`${inputClassName} ${className}`}
         placeholder={placeholder || ""}
-        ref={register({ required, minLength })}
+        ref={register({ required, minLength: minLength })}
       />
       <div className="invalid-feedback d-block">{error}</div>
     </>

@@ -4,7 +4,7 @@ import { Input } from "../inputs";
 import { registration } from "../redux/auth";
 import { useForm } from "react-hook-form";
 
-const Register = () => {
+const addFilm = () => {
   const {
     register,
     handleSubmit,

@@ -74,6 +74,7 @@ const Login = () => {
             <Input
               name="password"
               label="Password"
+              type="password"
               placeholder="Enter Your password"
               errors={errors}
               register={register}

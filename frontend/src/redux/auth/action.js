@@ -35,3 +35,17 @@ export const login = (values) => async (dispatch) => {
       });
     });
 };
+
+export const addFilm = (values) => async (dispatch) => {
+  axios
+    .post(`${ACCOUNT_SERVICE_URI}/users/login`, values)
+    .then((response) => {
+      dispatch({ type: types.LOGIN, payload: response.data });
+    })
+    .catch((err) => {
+      dispatch({
+        type: types.LOGIN_FAILURE,
+        payload: err,
+      });
+    });
+};

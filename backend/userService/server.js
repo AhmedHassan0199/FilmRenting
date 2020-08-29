@@ -22,7 +22,7 @@ mongoose
     console.log("Not Connected to Database ERROR! ", err);
   });
 
-const userRoutes = require("./Users");
+const userRoutes = require("./routes/userRoutes");
 
 app.use("/users", userRoutes);
 

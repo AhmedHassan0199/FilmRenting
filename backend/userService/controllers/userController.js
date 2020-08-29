@@ -1,17 +1,15 @@
-const express = require("./node_modules/express");
-const users = express.Router();
-const jwt = require("./node_modules/jsonwebtoken");
-const bcrypt = require("./node_modules/bcrypt/bcrypt");
+const jwt = require("../node_modules/jsonwebtoken");
+const bcrypt = require("../node_modules/bcrypt/bcrypt");
 const {
   ALREADY_EXIST,
   BAD_REQUEST,
   AUTHORIZATION_ERROR,
   GOOD_REQUEST,
-} = require("./utils/httpCodes");
-const keys = require("./utils/keys");
-const User = require("./models/user");
+} = require("../utils/httpCodes");
+const keys = require("../utils/keys");
+const User = require("../models/user");
 
-users.post("/register", (req, res) => {
+module.exports.registerUser = (req, res) => {
   const userData = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -45,9 +43,8 @@ users.post("/register", (req, res) => {
     .catch((err) => {
       res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
     });
-});
-
-users.post("/login", (req, res) => {
+};
+module.exports.login = (req, res) => {
   User.findOne({
     username: req.body.username,
   })
@@ -77,27 +74,4 @@ users.post("/login", (req, res) => {
     .catch((err) => {
       res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
     });
-});
-
-users.post("/profile", (req, res) => {
-  var Decoded = jwt.verify(
-    req.headers["authorization"],
-    process.env.SECRET_KEY
-  );
-
-  User.findOne({
-    _id: Decoded._id,
-  })
-    .then((user) => {
-      if (user) {
-        res.json(user);
-      } else {
-        res.status(AUTHORIZATION_ERROR).json({ error: "User doesnt exist" });
-      }
-    })
-    .catch((err) => {
-      res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
-    });
-});
-
-module.exports = users;
+};
