@@ -11,6 +11,8 @@ import ChooseFilm from "./components/chooseFilm";
 
 class App extends Component {
   render() {
+    console.log("process.env", process.env);
+
     return (
       <BrowserRouter>
         <div className="App">
