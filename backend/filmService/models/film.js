@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-var Float = require("mongoose-float").loadType(mongoose);
+const { ObjectID } = require("mongodb");
 const Schema = mongoose.Schema;
 
 const filmScehema = new Schema({
@@ -7,7 +7,7 @@ const filmScehema = new Schema({
     type: String,
   },
   price: {
-    type: Float,
+    type: Number,
   },
   genre: {
     type: String,
@@ -16,7 +16,7 @@ const filmScehema = new Schema({
     type: Date,
   },
   createdBy: {
-    type: String,
+    type: ObjectID,
   },
 });
 

@@ -1,15 +1,15 @@
 const express = require("express");
-const boydParser = require("body-parser");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const { port, mongoURI } = require("./utils/keys");
+const helmet = require("helmet");
+const { port, mongoURI, bodyParser, bodyParserJSON } = require("./utils/keys");
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParserJSON);
 app.use(cors());
-app.use(boydParser.urlencoded({ extended: false }));
+app.use(helmet());
+app.use(bodyParser);
 
 //const MongoURI='mongodb+srv://AdminAdmin:2151999619@cluster0.z8tgy.mongodb.net/LoginCredentials?retryWrites=true&w=majority'
 

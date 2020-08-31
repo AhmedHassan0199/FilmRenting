@@ -6,6 +6,9 @@ const {
   AUTHORIZATION_ERROR,
   GOOD_REQUEST,
 } = require("../utils/httpCodes");
+const joi = require("joi");
+joi.objectId = require("joi-objectid")(joi);
+const joiAssert = require("joi-assert");
 const keys = require("../utils/keys");
 const User = require("../models/user");
 
@@ -17,32 +20,43 @@ module.exports.registerUser = (req, res) => {
     password: req.body.password,
     phoneNumber: req.body.phoneNumber,
   };
-
-  User.findOne({
-    username: req.body.username,
-  })
-    .then((user) => {
-      if (!user) {
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          userData.password = hash;
-          console.log(userData);
-          User.create(userData)
-            .then((user) => {
-              res
-                .status(GOOD_REQUEST)
-                .json({ status: user.username + " registered" });
-            })
-            .catch((err) => {
-              res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
-            });
-        });
-      } else {
-        res.status(ALREADY_EXIST).json({ error: "User already exists" });
-      }
+  const Validations = joi.object({
+    firstName: joi.string().required(),
+    lastName: joi.string().required(),
+    username: joi.string().required(),
+    password: joi.string().required().min(8),
+    phoneNumber: joi.number().required().min(8).max(15),
+  });
+  const valid = Validations.validate(userData);
+  if (valid) {
+    User.findOne({
+      username: req.body.username,
     })
-    .catch((err) => {
-      res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
-    });
+      .then((user) => {
+        if (!user) {
+          bcrypt.hash(req.body.password, 10, (err, hash) => {
+            userData.password = hash;
+            console.log(userData);
+            User.create(userData)
+              .then((user) => {
+                res
+                  .status(GOOD_REQUEST)
+                  .json({ status: user.username + " registered" });
+              })
+              .catch((err) => {
+                res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+              });
+          });
+        } else {
+          res.status(ALREADY_EXIST).json({ error: "User already exists" });
+        }
+      })
+      .catch((err) => {
+        res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+      });
+  } else {
+    res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+  }
 };
 module.exports.login = (req, res) => {
   User.findOne({
@@ -53,6 +67,7 @@ module.exports.login = (req, res) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const Data = {
+            id: user._id,
             username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,

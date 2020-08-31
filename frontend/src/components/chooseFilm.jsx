@@ -98,7 +98,7 @@ const AddFilm = () => {
           </div>
           <div className="form-group">
             <Input
-              name="initialRelease"
+              name="initialRealease"
               placeholder="Released"
               label="Release Date"
               errors={errors}

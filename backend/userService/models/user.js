@@ -5,9 +5,11 @@ const Schema = mongoose.Schema;
 const userScehema = new Schema({
   firstName: {
     type: String,
+    required: true,
   },
   lastName: {
     type: String,
+    required: true,
   },
   username: {
     type: String,
@@ -16,9 +18,13 @@ const userScehema = new Schema({
   password: {
     type: String,
     required: true,
+    minlength: 8,
   },
   phoneNumber: {
     type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 15,
   },
 });
 
