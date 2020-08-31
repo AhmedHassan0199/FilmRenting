@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import Navbar from "./components/navbar";
-import Login from "./components/login";
-import Register from "./components/register";
-import Base from "./components/base";
-import Profile from "./components/profile";
-import AddFilm from "./components/addFilm";
+import Navbar from './components/navbar';
+import Login from './components/login';
+import Register from './components/register';
+import Base from './components/base';
+import Profile from './components/profile';
+import AddFilm from './components/addFilm';
 
 class App extends Component {
   render() {
+    console.log('process.env', process.env);
+
     return (
       <BrowserRouter>
         <div className="App">
