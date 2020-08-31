@@ -18,6 +18,11 @@ const initState = {
     successMsg: null,
     errorMsg: null,
   },
+  filmList: {
+    films: [],
+    successMsg: null,
+    errorMsg: null,
+  },
 };
 
 export default function auth(state = initState, action) {
@@ -59,7 +64,7 @@ export default function auth(state = initState, action) {
         ...state,
         film: action.payload,
         addFilm: {
-          ...state.addingFilm,
+          ...state.addFilm,
           successMsg: "Film Added",
         },
       };
@@ -67,11 +72,27 @@ export default function auth(state = initState, action) {
       return {
         ...state,
         addFilm: {
-          ...state.addingFilm,
+          ...state.addFilm,
           errorMsg: "Film not added , Something went wrong",
         },
       };
-
+    case types.LIST_RETRIEVED:
+      return {
+        ...state,
+        filmList: {
+          ...state.filmList,
+          films: action.payload,
+          successMsg: "List is okay",
+        },
+      };
+    case types.LIST_NOT_RETRIEVED:
+      return {
+        ...state,
+        filmList: {
+          ...state.filmList,
+          errorMsg: "Error in getting the list",
+        },
+      };
     default:
       return state;
   }

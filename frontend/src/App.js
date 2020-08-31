@@ -7,6 +7,7 @@ import Register from "./components/register";
 import Base from "./components/base";
 import Profile from "./components/profile";
 import AddFilm from "./components/addFilm";
+import ChooseFilm from "./components/chooseFilm";
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/addFilm" component={AddFilm} />
+            <Route exact path="/filmList" component={ChooseFilm} />
           </div>
         </div>
       </BrowserRouter>

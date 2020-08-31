@@ -6,8 +6,6 @@ const {
 } = require("../utils/httpCodes");
 const joi = require("joi");
 joi.objectId = require("joi-objectid")(joi);
-const joiAssert = require("joi-assert");
-const keys = require("../utils/keys");
 const Film = require("../models/film");
 
 module.exports.addFilm = (req, res) => {
@@ -40,20 +38,12 @@ module.exports.addFilm = (req, res) => {
     res.status(BAD_REQUEST).json({ error: "Something went wrong" });
   }
 };
-module.exports.verifyUser = (req, res) => {
-  var Decoded = jwt.verify(req.headers["authorization"], keys.jwtSecretKey);
-
-  User.findOne({
-    _id: Decoded._id,
-  })
-    .then((user) => {
-      if (user) {
-        res.json(user);
-      } else {
-        res.send("User doesnt exist");
-      }
-    })
-    .catch((err) => {
-      res.send("error " + err);
-    });
+module.exports.getFilms = (req, res) => {
+  const films = Film.find({}).then((x) => {
+    if (x.length > 0) {
+      res.status(GOOD_REQUEST).json(x);
+    } else {
+      res.status(BAD_REQUEST).json({ error: "Something went wrong" });
+    }
+  });
 };

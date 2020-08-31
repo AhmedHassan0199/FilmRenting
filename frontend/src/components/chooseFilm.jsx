@@ -1,131 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import jwt_decode from "jwt-decode";
-import { Input } from "../inputs";
-import { addFilm } from "../redux/auth";
-import { useForm } from "react-hook-form";
+import { Table, Space, Tag } from "antd";
+import { getFilms } from "../redux/auth";
 
 const AddFilm = () => {
-  const {
-    register,
-    handleSubmit,
-    // eslint-disable-next-line
-    watch,
-    errors,
-    // eslint-disable-next-line
-    getValues,
-    formState,
-  } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
-  var decoded = {};
-  try {
-    decoded = jwt_decode(localStorage.usertoken);
-  } catch {
-    window.location.href = "/Login";
-  }
+  var filmArray = [];
+  const columns = [
+    {
+      title: "Film Title",
+      dataIndex: "filmTitle",
+      key: "filmTitle",
+      className: "mb-2 font-weight-bold",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "Genre",
+      dataIndex: "genre",
+      key: "genre",
+    },
+    {
+      title: "Release Date",
+      dataIndex: "initialRelease",
+      key: "initialRelease",
+    },
+    {
+      title: "Buy Now",
+      dataIndex: "createdBy",
+      key: "createdBy",
+      render: (tag) => {
+        return (
+          <Tag color={"volcano"} key={tag}>
+            {"Buy"}
+          </Tag>
+        );
+      },
+    },
+  ];
   const dispatch = useDispatch();
-
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
-  const addFilmStore = useSelector(({ auth }) => auth.addFilm);
-
-  useEffect(() => {
-    if (addFilmStore.successMsg) {
-      setSuccessMsg(addFilmStore.successMsg);
-      setErrorMsg(null);
-    } else if (addFilmStore.errorMsg) {
-      setErrorMsg(addFilmStore.errorMsg);
-      setSuccessMsg(null);
-    }
-  }, [addFilmStore.successMsg, addFilmStore.errorMsg]);
-
-  const onSubmit = (formData) => {
-    console.log(formData);
-    if (formState.isValid) {
-      dispatch(addFilm(formData));
-    }
-  };
-
+  const filmListStore = useSelector(({ auth }) => auth.filmList);
+  dispatch(getFilms());
+  filmArray = filmListStore.films;
   return (
     <div className="container">
-      <div className="col-md-6 mt-2 mx-auto">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="h3 mb-3 font-weight-normal">
-            Create a new film for rent
-          </h1>
-          {errorMsg && (
-            <div className="alert alert-danger" role="alert">
-              {errorMsg}
-            </div>
-          )}
-          {successMsg && (
-            <div className="alert alert-success" role="alert">
-              {successMsg}
-            </div>
-          )}
-          <div className="form-group">
-            <Input
-              name="filmTitle"
-              placeholder="Enter the Film Title"
-              label="Film Title"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
-          </div>
-          <div className="form-group">
-            <Input
-              name="price"
-              placeholder="Enter the film price"
-              label="Film Price"
-              type="Number"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
-          </div>
-          <div className="form-group">
-            <Input
-              name="genre"
-              placeholder="Enter the genre"
-              label="Genre"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
-          </div>
-          <div className="form-group">
-            <Input
-              name="initialRealease"
-              placeholder="Released"
-              label="Release Date"
-              errors={errors}
-              type="date"
-              register={register}
-              required={"Required!"}
-            />
-          </div>
-          <div className="form-group">
-            <Input
-              name="createdBy"
-              readOnly={true}
-              errors={errors}
-              type="hidden"
-              register={register}
-              value={decoded.id}
-              required={"Required!"}
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-lg btn-primary btn-block mb-2"
-          >
-            Add Film
-          </button>
-        </form>
+      <div className="col-md-10 mt-2 mx-auto">
+        <h1 className="h3 mb-10 font-weight-bold">
+          Create a new film for rent
+        </h1>
+        <Table columns={columns} dataSource={filmArray} />
       </div>
     </div>
   );
