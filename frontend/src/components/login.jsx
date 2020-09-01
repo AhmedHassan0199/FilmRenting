@@ -34,7 +34,7 @@ const Login = (props) => {
       setErrorMsg(loginStore.errorMsg);
       setSuccessMsg(null);
     }
-  }, [loginStore.successMsg, loginStore.errorMsg]);
+  }, [loginStore.successMsg, loginStore.errorMsg, history]);
 
   const onSubmit = (formData) => {
     if (formState.isValid) {

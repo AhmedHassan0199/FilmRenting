@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "../inputs";
-import { addFilm } from "../redux/auth";
+import { addFilm } from "../redux/filmAuth";
 import { useForm } from "react-hook-form";
 
 const AddFilm = () => {
@@ -18,7 +18,6 @@ const AddFilm = () => {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  var decoded = {};
 
   const dispatch = useDispatch();
 
