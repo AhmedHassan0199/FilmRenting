@@ -7,7 +7,8 @@ const { isFilmExists, createFilm, getAllFilms } = require('../repos/film');
 module.exports.addFilm = async (req, res) => {
   const { _id } = req.user;
   try {
-    if (isFilmExists(req.body.filmTitle)) {
+    const isFilmFound = await isFilmExists(req.body.filmTitle);
+    if (isFilmFound) {
       return res.status(ALREADY_EXIST).json({ error: 'Film already exists' });
     }
     const createdFilm = await createFilm({ ...req.body, createdBy: _id });
