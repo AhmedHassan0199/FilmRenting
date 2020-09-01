@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFilms } from "../redux/auth";
+import { getFilms } from "../redux/filmAuth";
 import * as ReactBootStrap from "react-bootstrap";
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
