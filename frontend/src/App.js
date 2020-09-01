@@ -8,6 +8,7 @@ import Base from "./components/base";
 import Profile from "./components/profile";
 import AddFilm from "./components/addFilm";
 import ChooseFilm from "./components/chooseFilm";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
   render() {
