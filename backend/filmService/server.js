@@ -2,14 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
-const { port, mongoURI, bodyParser, bodyParserJSON } = require("./utils/keys");
+const { port, mongoURI } = require("./utils/keys");
+const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(bodyParserJSON);
+app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
-app.use(bodyParser);
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //const MongoURI='mongodb+srv://AdminAdmin:2151999619@cluster0.z8tgy.mongodb.net/LoginCredentials?retryWrites=true&w=majority'
 

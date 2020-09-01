@@ -10,16 +10,15 @@ const Film = require("../models/film");
 const User = require("../../userService/models/user");
 
 module.exports.addFilm = (req, res) => {
-  console.log("dola");
-
-  const filmData = {
+  var filmData = {
     filmTitle: req.body.filmTitle,
     price: req.body.price,
     genre: req.body.genre,
     initialRelease: req.body.initialRelease,
   };
-  const userFound = User.findOne({ filmTitle: filmTitle });
-  console.log("userFound", userFound);
+  const userFound = User.findOne({ filmTitle: filmData.filmTitle });
+  console.log(userFound);
+  filmData = { ...filmData, createdBy: userFound.createdBy };
   const Validations = joi.object({
     filmTitle: joi.string().required(),
     price: joi.number().required(),

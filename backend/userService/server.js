@@ -1,14 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const BodyParse = require("body-parser");
+const bodyParser = require("body-parser");
 const { port, mongoURI, bodyParser, bodyParserJSON } = require("./utils/keys");
 
 const app = express();
 
-app.use(bodyParserJSON);
+app.use(bodyParser.json());
 app.use(cors());
-app.use(bodyParser);
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //const MongoURI='mongodb+srv://AdminAdmin:2151999619@cluster0.z8tgy.mongodb.net/LoginCredentials?retryWrites=true&w=majority'
 
