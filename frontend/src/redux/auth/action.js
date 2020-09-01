@@ -42,11 +42,14 @@ export const login = (values) => async (dispatch) => {
 
 export const addFilm = (values) => async (dispatch) => {
   axios
-    .post(`${FILM_SERVICE_URI}/films/addFilm`, values)
+    .post(`${FILM_SERVICE_URI}/films/addFilm`, values, {
+      headers: { Authorization: `Bearer ${localStorage.usertoken}` },
+    })
     .then((response) => {
       dispatch({ type: types.FILM_ADDED, payload: response.data });
     })
     .catch((err) => {
+      console.log("ERROR : " + err);
       dispatch({
         type: types.FILM_NOT_ADDED,
         payload: err,

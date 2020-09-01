@@ -28,26 +28,35 @@ const AddFilm = () => {
             tempDate.getFullYear()}
         </td>
         <AwesomeButton>
-          <td>Buy</td>
+          <td>Rent</td>
         </AwesomeButton>
       </tr>
     );
   };
   return (
     <div className="container">
-      <ReactBootStrap.Table striped bordered hover variant="dark" responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Film Title</th>
-            <th>Price</th>
-            <th>Genre</th>
-            <th>Release Date</th>
-            <th>Buy Now</th>
-          </tr>
-        </thead>
-        <tbody>{filmArray.map(renderList)}</tbody>
-      </ReactBootStrap.Table>
+      <div className="title">
+        <h1>Choose a film to Rent</h1>
+      </div>
+      <div className="dataTable">
+        <ReactBootStrap.Table striped bordered hover variant="dark" responsive>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Film Title</th>
+              <th>Price</th>
+              <th>Genre</th>
+              <th>Release Date</th>
+              <th>Rent Now</th>
+            </tr>
+          </thead>
+          <tbody>{filmArray.map(renderList)}</tbody>
+        </ReactBootStrap.Table>
+      </div>
+      <div className="createNew">
+        <h2>Or create a new film</h2>
+        <AwesomeButton href="/addFilm">Create Film</AwesomeButton>
+      </div>
     </div>
   );
 };

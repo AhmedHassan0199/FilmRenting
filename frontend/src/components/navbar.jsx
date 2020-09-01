@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends Component {
   LogOut(e) {
     e.preventDefault();
-    localStorage.removeItem('usertoken');
+    localStorage.removeItem("usertoken");
     console.log(localStorage.usertoken);
-    this.props.history.push('/');
+    this.props.history.push("/");
   }
 
   render() {
@@ -28,7 +28,7 @@ class Navbar extends Component {
     const userLink = (
       <ul className="navbar-nav">
         <li className="nav-item">
-          <Link to="/profile" className="nav-link">
+          <Link to="/filmList" className="nav-link">
             User
           </Link>
         </li>
@@ -53,7 +53,10 @@ class Navbar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse justify-content-md-center" id="navbar1">
+        <div
+          className="collapse navbar-collapse justify-content-md-center"
+          id="navbar1"
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/" className="nav-link">

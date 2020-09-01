@@ -7,6 +7,7 @@ const {
 const joi = require("joi");
 joi.objectId = require("joi-objectid")(joi);
 const Film = require("../models/film");
+const User = require("../../userService/models/user");
 
 module.exports.addFilm = (req, res) => {
   const filmData = {
@@ -14,8 +15,9 @@ module.exports.addFilm = (req, res) => {
     price: req.body.price,
     genre: req.body.genre,
     initialRelease: req.body.initialRelease,
-    createdBy: req.body.createdBy,
   };
+  const userFound = User.findOne({ filmTitle: filmTitle });
+  console.log(userFound);
   const Validations = joi.object({
     filmTitle: joi.string().required(),
     price: joi.number().required(),

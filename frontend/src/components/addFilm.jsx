@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import jwt_decode from "jwt-decode";
 import { Input } from "../inputs";
 import { addFilm } from "../redux/auth";
 import { useForm } from "react-hook-form";
@@ -20,11 +19,7 @@ const AddFilm = () => {
     reValidateMode: "onChange",
   });
   var decoded = {};
-  try {
-    decoded = jwt_decode(localStorage.usertoken);
-  } catch {
-    window.location.href = "/Login";
-  }
+
   const dispatch = useDispatch();
 
   const [errorMsg, setErrorMsg] = useState("");
@@ -104,17 +99,6 @@ const AddFilm = () => {
               errors={errors}
               type="date"
               register={register}
-              required={"Required!"}
-            />
-          </div>
-          <div className="form-group">
-            <Input
-              name="createdBy"
-              readOnly={true}
-              errors={errors}
-              type="hidden"
-              register={register}
-              value={decoded.id}
               required={"Required!"}
             />
           </div>
