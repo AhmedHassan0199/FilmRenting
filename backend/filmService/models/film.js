@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { ObjectID } = require("mongodb");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const filmScehema = new Schema({
@@ -20,9 +19,10 @@ const filmScehema = new Schema({
     required: true,
   },
   createdBy: {
-    type: ObjectID,
+    type: Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
 });
 
-module.exports = Films = mongoose.model("filmData", filmScehema);
+module.exports = Films = mongoose.model('film', filmScehema);

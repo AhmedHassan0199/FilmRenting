@@ -1,16 +1,13 @@
-const jwt = require("../node_modules/jsonwebtoken");
-const bcrypt = require("../node_modules/bcrypt/bcrypt");
-const {
-  ALREADY_EXIST,
-  BAD_REQUEST,
-  AUTHORIZATION_ERROR,
-  GOOD_REQUEST,
-} = require("../utils/httpCodes");
-const joi = require("joi");
-joi.objectId = require("joi-objectid")(joi);
-const joiAssert = require("joi-assert");
-const keys = require("../utils/keys");
-const User = require("../models/user");
+const joi = require('joi');
+const mongoose = require('mongoose');
+joi.objectId = require('joi-objectid')(joi);
+const keys = require('../utils/keys');
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { ALREADY_EXIST, BAD_REQUEST, AUTHORIZATION_ERROR, GOOD_REQUEST, SERVER_ERROR } = require('../utils/httpCodes');
+const { jwtExpiresIn, jwtSecretKey } = require('../utils/keys');
+const { getUserById } = require('../repos/user');
 
 module.exports.registerUser = (req, res) => {
   const userData = {
@@ -39,23 +36,21 @@ module.exports.registerUser = (req, res) => {
             console.log(userData);
             User.create(userData)
               .then((user) => {
-                res
-                  .status(GOOD_REQUEST)
-                  .json({ status: user.username + " registered" });
+                res.status(GOOD_REQUEST).json({ status: user.username + ' registered' });
               })
               .catch((err) => {
-                res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+                res.status(BAD_REQUEST).json({ error: 'Something Went Wrong' });
               });
           });
         } else {
-          res.status(ALREADY_EXIST).json({ error: "User already exists" });
+          res.status(ALREADY_EXIST).json({ error: 'User already exists' });
         }
       })
       .catch((err) => {
-        res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+        res.status(BAD_REQUEST).json({ error: 'Something Went Wrong' });
       });
   } else {
-    res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+    res.status(BAD_REQUEST).json({ error: 'Something Went Wrong' });
   }
 };
 module.exports.login = (req, res) => {
@@ -63,7 +58,7 @@ module.exports.login = (req, res) => {
     username: req.body.username,
   })
     .then((user) => {
-      console.log("USER :" + user);
+      console.log('USER :' + user);
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const Data = {
@@ -73,20 +68,28 @@ module.exports.login = (req, res) => {
             lastName: user.lastName,
             phoneNumber: user.phoneNumber,
           };
-          let token = jwt.sign(Data, keys.jwtSecretKey, {
-            expiresIn: keys.jwtExpiresIn,
+          let token = jwt.sign(Data, jwtSecretKey, {
+            expiresIn: jwtExpiresIn,
           });
           res.status(GOOD_REQUEST).json(token);
         } else {
-          res.status(AUTHORIZATION_ERROR).json({ error: "Wrong Password" });
+          res.status(AUTHORIZATION_ERROR).json({ error: 'Wrong Password' });
         }
       } else {
-        res
-          .status(AUTHORIZATION_ERROR)
-          .json({ error: "Wrong username or password" });
+        res.status(AUTHORIZATION_ERROR).json({ error: 'Wrong username or password' });
       }
     })
     .catch((err) => {
-      res.status(BAD_REQUEST).json({ error: "Something Went Wrong" });
+      res.status(BAD_REQUEST).json({ error: 'Something Went Wrong' });
     });
+};
+
+exports.getUserById = async (req, res) => {
+  try {
+    var id = mongoose.Types.ObjectId(req.params.id);
+    const user = await getUserById(id);
+    return res.json(user);
+  } catch (error) {
+    res.status(SERVER_ERROR).json(null);
+  }
 };

@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userScehema = new Schema({
@@ -28,4 +27,4 @@ const userScehema = new Schema({
   },
 });
 
-module.exports = User = mongoose.model("usersData", userScehema);
+module.exports = User = mongoose.model('user', userScehema);
