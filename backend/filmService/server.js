@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -17,21 +16,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
 require('./utils/passport');
-=======
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const helmet = require("helmet");
-const { port, mongoURI } = require("./utils/keys");
-const bodyParser = require("body-parser");
-
-const app = express();
-
-app.use(bodyParser.json());
-app.use(cors());
-app.use(helmet());
-app.use(bodyParser.urlencoded({ extended: false }));
->>>>>>> 70dd4bbc1b817fe50d2d8e130968dd57fea244ac
 
 //const MongoURI='mongodb+srv://AdminAdmin:2151999619@cluster0.z8tgy.mongodb.net/LoginCredentials?retryWrites=true&w=majority'
 
