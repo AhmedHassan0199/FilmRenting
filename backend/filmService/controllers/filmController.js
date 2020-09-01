@@ -1,11 +1,16 @@
-const { ALREADY_EXIST, BAD_REQUEST, AUTHORIZATION_ERROR, GOOD_REQUEST } = require('../utils/httpCodes');
-const joi = require('joi');
-joi.objectId = require('joi-objectid')(joi);
-const Film = require('../models/film');
-const User = require('../../userService/models/user');
+const {
+  ALREADY_EXIST,
+  BAD_REQUEST,
+  AUTHORIZATION_ERROR,
+  GOOD_REQUEST,
+} = require("../utils/httpCodes");
+const joi = require("joi");
+joi.objectId = require("joi-objectid")(joi);
+const Film = require("../models/film");
+const User = require("../../userService/models/user");
 
 module.exports.addFilm = (req, res) => {
-  console.log('dola');
+  console.log("dola");
 
   const filmData = {
     filmTitle: req.body.filmTitle,
@@ -14,7 +19,7 @@ module.exports.addFilm = (req, res) => {
     initialRelease: req.body.initialRelease,
   };
   const userFound = User.findOne({ filmTitle: filmTitle });
-  console.log('userFound', userFound);
+  console.log("userFound", userFound);
   const Validations = joi.object({
     filmTitle: joi.string().required(),
     price: joi.number().required(),
@@ -27,14 +32,14 @@ module.exports.addFilm = (req, res) => {
   if (valid) {
     Film.create(filmData)
       .then((film) => {
-        res.status(GOOD_REQUEST).json({ status: film.filmTitle + 'Is added' });
+        res.status(GOOD_REQUEST).json({ status: film.filmTitle + "Is added" });
       })
       .catch((err) => {
         console.log(err);
-        res.status(BAD_REQUEST).json({ error: 'Something went wrong' });
+        res.status(BAD_REQUEST).json({ error: "Something went wrong" });
       });
   } else {
-    res.status(BAD_REQUEST).json({ error: 'Something went wrong' });
+    res.status(BAD_REQUEST).json({ error: "Something went wrong" });
   }
 };
 module.exports.getFilms = (req, res) => {
@@ -42,7 +47,7 @@ module.exports.getFilms = (req, res) => {
     if (x.length > 0) {
       res.status(GOOD_REQUEST).json(x);
     } else {
-      res.status(BAD_REQUEST).json({ error: 'Something went wrong' });
+      res.status(BAD_REQUEST).json({ error: "Something went wrong" });
     }
   });
 };
