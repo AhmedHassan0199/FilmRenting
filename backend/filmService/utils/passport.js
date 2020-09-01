@@ -12,7 +12,7 @@ opts.secretOrKey = jwtSecretKey;
 passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {
     console.log('PAYLOAD:', jwt_payload);
-    mongoose.model('filmData').findOne({ _id: jwt_payload.id }, function (err, user) {
+    mongoose.model('usersData').findOne({ _id: jwt_payload.id }, function (err, user) {
       console.log('ERROR : ' + err);
       console.log('USER_FOUND : ' + user);
       if (err) {
