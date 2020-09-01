@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input } from '../inputs';
-import { login } from '../redux/auth';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Input } from "../inputs";
+import { login } from "../redux/auth";
+import { useForm } from "react-hook-form";
 
 const Login = (props) => {
   const { history } = props;
@@ -16,20 +16,20 @@ const Login = (props) => {
     getValues,
     formState,
   } = useForm({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
   const dispatch = useDispatch();
 
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const loginStore = useSelector(({ auth }) => auth.login);
 
   useEffect(() => {
     if (loginStore.successMsg) {
       setSuccessMsg(loginStore.successMsg);
       setErrorMsg(null);
-      history.push('/filmList');
+      if (localStorage.usertoken) history.push("/filmList");
     } else if (loginStore.errorMsg) {
       setErrorMsg(loginStore.errorMsg);
       setSuccessMsg(null);
@@ -58,7 +58,14 @@ const Login = (props) => {
             </div>
           )}
           <div className="form-group">
-            <Input name="username" label="Username" placeholder="Enter Your UserName" errors={errors} register={register} required={'Required'} />
+            <Input
+              name="username"
+              label="Username"
+              placeholder="Enter Your UserName"
+              errors={errors}
+              register={register}
+              required={"Required"}
+            />
           </div>
           <div className="form-group">
             <Input
@@ -68,7 +75,7 @@ const Login = (props) => {
               placeholder="Enter Your password"
               errors={errors}
               register={register}
-              required={'Required'}
+              required={"Required"}
             />
           </div>
           <button type="submit" className="btn btn-lg btn-primary btn-block">
