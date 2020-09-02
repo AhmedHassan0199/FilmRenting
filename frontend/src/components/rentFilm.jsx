@@ -28,7 +28,7 @@ const Rent = (props) => {
     <div className="container">
       <div className="col-md-6 mt-5 mx-auto">
         <h1 className="h3 mb-3 font-weight-normal">
-          Buy {filmData.filmTitle} film
+          Rent {filmData.filmTitle} film
         </h1>
         {errorMsg && (
           <div className="alert alert-danger" role="alert">
