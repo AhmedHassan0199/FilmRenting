@@ -9,9 +9,8 @@ const { isFilmExists, createFilm, getAllFilms } = require("../repos/film");
 const stripe = require("stripe")(
   "sk_test_51HMXmEIkP9PE94S848RFXHoMWYZmrJDeldoXDIP8Ph4EYcMV1uBB34tUqehnx2W1D004VU35RmtL86VEJMiP8hJ1009z3PX33r"
 );
-const uuid = require("uuid");
-const { custom } = require("joi");
-
+const { v4: uuidv4 } = require("uuid");
+uuidv4();
 module.exports.addFilm = async (req, res) => {
   const { _id } = req.user;
   try {
@@ -37,24 +36,26 @@ module.exports.getFilms = async (req, res) => {
 };
 
 module.exports.rentFilm = async (req, res) => {
-  console.log("REQUEST :" + req.body);
+  console.log("REQUEST :");
+  console.log(req.body);
   let error;
   let status;
 
   try {
-    const { product, token } = req.body;
+    const { filmData, token } = req.body;
     const customer = await stripe.customers.create({
       email: token.email,
       source: token.id,
     });
-    const idempotency_key = uuid();
+    const { v4: uuidv4 } = require("uuid");
+    const idempotency_key = uuidv4();
     const charge = await stripe.charges.create(
       {
-        amount: product.price * 100,
+        amount: filmData.price * 100,
         currency: "usd",
         customer: customer.id,
         receipt_email: token.email,
-        description: `Rented the ${product.filmTitle} film`,
+        description: `Rented the ${filmData.filmTitle} film`,
         shipping: {
           name: token.card.name,
           address: {

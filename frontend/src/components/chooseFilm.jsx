@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFilms } from "../redux/film";
 import * as ReactBootStrap from "react-bootstrap";
 import { AwesomeButton } from "react-awesome-button";
-import rentFilm from "./rentFilm";
 import "react-awesome-button/dist/styles.css";
 const AddFilm = (props) => {
   const { history } = props;
