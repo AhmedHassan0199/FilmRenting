@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFilms } from "../redux/filmAuth";
+import { getFilms } from "../redux/film";
 import * as ReactBootStrap from "react-bootstrap";
 import { AwesomeButton } from "react-awesome-button";
+import rentFilm from "./rentFilm";
 import "react-awesome-button/dist/styles.css";
-
-const AddFilm = () => {
+const AddFilm = (props) => {
+  const { history } = props;
   var filmArray = [];
-
+  function reply_click(e) {
+    var ChoosenFilm = {
+      filmTitle: filmArray[e.target.id].filmTitle,
+      price: filmArray[e.target.id].price,
+      genre: filmArray[e.target.id].genre,
+      initialRelease: filmArray[e.target.id].initialRelease,
+    };
+    localStorage.setItem("choosenFilm", JSON.stringify(ChoosenFilm));
+    history.push("/rentFilm");
+  }
   const dispatch = useDispatch();
-  const filmListStore = useSelector(({ auth }) => auth.filmList);
-  dispatch(getFilms());
+  const filmListStore = useSelector(({ filmReducer }) => filmReducer.filmList);
+  if (filmListStore.films.length === 0) {
+    dispatch(getFilms());
+  }
   filmArray = filmListStore.films;
   const renderList = (film, index) => {
     var tempDate = new Date(film.initialRelease);
@@ -27,9 +39,11 @@ const AddFilm = () => {
             "/" +
             tempDate.getFullYear()}
         </td>
-        <AwesomeButton>
-          <td>Rent</td>
-        </AwesomeButton>
+        <td>
+          <button id={index} onClick={reply_click}>
+            Rent
+          </button>
+        </td>
       </tr>
     );
   };

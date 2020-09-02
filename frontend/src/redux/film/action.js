@@ -6,6 +6,8 @@ export const types = {
   FILM_NOT_ADDED: "FILM NOT ADDED",
   LIST_RETRIEVED: "LIST IS OKAY",
   LIST_NOT_RETRIEVED: "LIST ERROR",
+  FILM_RENTED: "FILM RENTED",
+  FILM_NOT_RENTED: "FILM NOT RENTED",
 };
 
 export const addFilm = (values) => async (dispatch) => {
@@ -26,13 +28,31 @@ export const addFilm = (values) => async (dispatch) => {
 };
 export const getFilms = (values) => async (dispatch) => {
   axios
-    .post(`${FILM_SERVICE_URI}/films/filmList`, values)
+    .post(`${FILM_SERVICE_URI}/films/filmList`, values, {
+      headers: { Authorization: `Bearer ${localStorage.usertoken}` },
+    })
     .then((response) => {
       dispatch({ type: types.LIST_RETRIEVED, payload: response.data });
     })
     .catch((err) => {
       dispatch({
         type: types.LIST_NOT_RETRIEVED,
+        payload: err,
+      });
+    });
+};
+
+export const rentFilm = (values) => async (dispatch) => {
+  axios
+    .post(`${FILM_SERVICE_URI}/films/rentFilm`, values, {
+      headers: { Authorization: `Bearer ${localStorage.usertoken}` },
+    })
+    .then((response) => {
+      dispatch({ type: types.FILM_RENTED, payload: response.data });
+    })
+    .catch((err) => {
+      dispatch({
+        type: types.FILM_NOT_RENTED,
         payload: err,
       });
     });

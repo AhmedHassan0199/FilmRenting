@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "../inputs";
-import { addFilm } from "../redux/filmAuth";
+import { addFilm } from "../redux/film";
 import { useForm } from "react-hook-form";
 
 const AddFilm = () => {
@@ -23,7 +23,7 @@ const AddFilm = () => {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const addFilmStore = useSelector(({ auth }) => auth.addFilm);
+  const addFilmStore = useSelector(({ filmReducer }) => filmReducer.filmList);
 
   useEffect(() => {
     if (addFilmStore.successMsg) {

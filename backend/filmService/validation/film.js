@@ -1,4 +1,4 @@
-const joi = require('joi');
+const joi = require("joi");
 
 const errorMapped = (errors, res) => {
   const errorsMapped = errors.map((e) => ({ message: e.message }));

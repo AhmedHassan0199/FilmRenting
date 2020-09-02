@@ -10,9 +10,14 @@ const initState = {
     successMsg: null,
     errorMsg: null,
   },
+  filmRent: {
+    successMsg: null,
+    errorMsg: null,
+  },
 };
 
-export default function auth(state = initState, action) {
+export default function filmReducer(state = initState, action) {
+  console.log(action);
   switch (action.type) {
     case types.FILM_ADDED:
       return {
@@ -46,6 +51,22 @@ export default function auth(state = initState, action) {
         filmList: {
           ...state.filmList,
           errorMsg: "Error in getting the list",
+        },
+      };
+    case types.FILM_RENTED:
+      return {
+        ...state,
+        filmRent: {
+          ...state.filmRent,
+          successMsg: "Film Rented",
+        },
+      };
+    case types.FILM_NOT_RENTED:
+      return {
+        ...state,
+        filmRent: {
+          ...state.filmRent,
+          errorMsg: "Renting Failed",
         },
       };
     default:

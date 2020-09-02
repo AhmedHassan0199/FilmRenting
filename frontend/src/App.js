@@ -8,12 +8,12 @@ import Base from "./components/base";
 import Profile from "./components/profile";
 import AddFilm from "./components/addFilm";
 import ChooseFilm from "./components/chooseFilm";
+import Rent from "./components/rentFilm";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
   render() {
-    console.log("process.env", process.env);
-
     return (
       <BrowserRouter>
         <div className="App">
@@ -25,6 +25,7 @@ class App extends Component {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/addFilm" component={AddFilm} />
             <Route exact path="/filmList" component={ChooseFilm} />
+            <Route exact path="/rentFilm" component={Rent} />
           </div>
         </div>
       </BrowserRouter>
