@@ -24,7 +24,9 @@ const Login = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const loginStore = useSelector(({ auth }) => auth.login);
-
+  useEffect(() => {
+    if (localStorage.usertoken) history.push("/filmList");
+  });
   useEffect(() => {
     if (loginStore.successMsg) {
       setSuccessMsg(loginStore.successMsg);

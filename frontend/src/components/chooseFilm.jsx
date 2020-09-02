@@ -48,8 +48,12 @@ const AddFilm = (props) => {
   };
   return (
     <div className="container">
+      <div className="createNew">
+        <h2>Create a new film</h2>
+        <AwesomeButton href="/addFilm">Create Film</AwesomeButton>
+      </div>
       <div className="title">
-        <h1>Choose a film to Rent</h1>
+        <h1>Or choose a film to Rent</h1>
       </div>
       <div className="dataTable">
         <ReactBootStrap.Table striped bordered hover variant="dark" responsive>
@@ -65,10 +69,6 @@ const AddFilm = (props) => {
           </thead>
           <tbody>{filmArray.map(renderList)}</tbody>
         </ReactBootStrap.Table>
-      </div>
-      <div className="createNew">
-        <h2>Or create a new film</h2>
-        <AwesomeButton href="/addFilm">Create Film</AwesomeButton>
       </div>
     </div>
   );

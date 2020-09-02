@@ -26,9 +26,9 @@ export const addFilm = (values) => async (dispatch) => {
       });
     });
 };
-export const getFilms = (values) => async (dispatch) => {
+export const getFilms = () => async (dispatch) => {
   axios
-    .post(`${FILM_SERVICE_URI}/films/filmList`, values, {
+    .get(`${FILM_SERVICE_URI}/films/filmList`, {
       headers: { Authorization: `Bearer ${localStorage.usertoken}` },
     })
     .then((response) => {

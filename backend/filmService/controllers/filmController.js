@@ -10,7 +10,7 @@ const stripe = require("stripe")(
   "sk_test_51HMXmEIkP9PE94S848RFXHoMWYZmrJDeldoXDIP8Ph4EYcMV1uBB34tUqehnx2W1D004VU35RmtL86VEJMiP8hJ1009z3PX33r"
 );
 const { v4: uuidv4 } = require("uuid");
-uuidv4();
+
 module.exports.addFilm = async (req, res) => {
   const { _id } = req.user;
   try {
@@ -47,7 +47,6 @@ module.exports.rentFilm = async (req, res) => {
       email: token.email,
       source: token.id,
     });
-    const { v4: uuidv4 } = require("uuid");
     const idempotency_key = uuidv4();
     const charge = await stripe.charges.create(
       {
@@ -73,9 +72,10 @@ module.exports.rentFilm = async (req, res) => {
     );
     console.log("Charge : ", { charge });
     status = "success";
+    res.status(GOOD_REQUEST).json(status);
   } catch (error) {
     console.log(error);
     status = "failure";
+    res.status(BAD_REQUEST).json(status);
   }
-  res.json({ error, status });
 };

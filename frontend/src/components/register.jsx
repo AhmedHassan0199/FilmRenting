@@ -4,7 +4,8 @@ import { Input } from "../inputs";
 import { registration } from "../redux/auth";
 import { useForm } from "react-hook-form";
 
-const Register = () => {
+const Register = (props) => {
+  const { history } = props;
   const {
     register,
     handleSubmit,
@@ -24,11 +25,14 @@ const Register = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const registerStore = useSelector(({ auth }) => auth.register);
-
+  useEffect(() => {
+    if (localStorage.usertoken) history.push("/filmList");
+  });
   useEffect(() => {
     if (registerStore.successMsg) {
       setSuccessMsg(registerStore.successMsg);
       setErrorMsg(null);
+      if (localStorage.usertoken) history.push("/filmList");
     } else if (registerStore.errorMsg) {
       setErrorMsg(registerStore.errorMsg);
       setSuccessMsg(null);

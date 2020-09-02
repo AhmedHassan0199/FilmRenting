@@ -10,7 +10,7 @@ router.post(
   validateCreateFilm,
   filmController.addFilm
 );
-router.post("/filmList", isAuthenticated, filmController.getFilms);
+router.get("/filmList", isAuthenticated, filmController.getFilms);
 
 router.post("/rentFilm", isAuthenticated, filmController.rentFilm);
 
