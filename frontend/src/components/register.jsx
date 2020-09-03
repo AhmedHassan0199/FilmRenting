@@ -1,43 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Input } from "../inputs";
-import { registration } from "../redux/auth";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input } from '../inputs';
+import { registration } from '../redux/auth';
+import { useForm } from 'react-hook-form';
 
 const Register = (props) => {
   const { history } = props;
-  const {
-    register,
-    handleSubmit,
-    // eslint-disable-next-line
-    watch,
-    errors,
-    // eslint-disable-next-line
-    getValues,
-    formState,
-  } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
+  const { register, handleSubmit, errors, formState, reset } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const dispatch = useDispatch();
 
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const registerStore = useSelector(({ auth }) => auth.register);
   useEffect(() => {
-    if (localStorage.usertoken) history.push("/filmList");
+    if (localStorage.usertoken) history.push('/filmList');
   });
   useEffect(() => {
     if (registerStore.successMsg) {
+      reset();
       setSuccessMsg(registerStore.successMsg);
       setErrorMsg(null);
-      if (localStorage.usertoken) history.push("/filmList");
+      if (localStorage.usertoken) history.push('/filmList');
     } else if (registerStore.errorMsg) {
       setErrorMsg(registerStore.errorMsg);
       setSuccessMsg(null);
     }
-  }, [registerStore.successMsg, registerStore.errorMsg]);
+  }, [registerStore.successMsg, registerStore.errorMsg, history, reset]);
 
   const onSubmit = (formData) => {
     if (formState.isValid) {
@@ -61,24 +53,10 @@ const Register = (props) => {
             </div>
           )}
           <div className="form-group">
-            <Input
-              name="firstName"
-              placeholder="First Name"
-              label="First Name"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
+            <Input name="firstName" placeholder="First Name" label="First Name" errors={errors} register={register} required={'Required!'} />
           </div>
           <div className="form-group">
-            <Input
-              name="lastName"
-              placeholder="Enter Your Last Name"
-              label="Last Name"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
+            <Input name="lastName" placeholder="Enter Your Last Name" label="Last Name" errors={errors} register={register} required={'Required!'} />
           </div>
           <div className="form-group">
             <Input
@@ -87,18 +65,11 @@ const Register = (props) => {
               label="Phone Number"
               errors={errors}
               register={register}
-              required={"Required!"}
+              required={'Required!'}
             />
           </div>
           <div className="form-group">
-            <Input
-              name="username"
-              placeholder="Enter Username"
-              label="Username"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
+            <Input name="username" placeholder="Enter Username" label="Username" errors={errors} register={register} required={'Required!'} />
           </div>
           <div className="form-group">
             <Input
@@ -109,14 +80,11 @@ const Register = (props) => {
               errors={errors}
               minLength={8}
               register={register}
-              required={"Required!"}
+              required={'Required!'}
             />
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-lg btn-primary btn-block mb-2"
-          >
+          <button type="submit" className="btn btn-lg btn-primary btn-block mb-2">
             Register
           </button>
         </form>

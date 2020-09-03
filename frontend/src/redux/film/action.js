@@ -1,13 +1,13 @@
-import axios from "axios";
-import { FILM_SERVICE_URI } from "../../utils";
+import axios from 'axios';
+import { FILM_SERVICE_URI } from '../../utils';
 
 export const types = {
-  FILM_ADDED: "ADDED A NEW FILM",
-  FILM_NOT_ADDED: "FILM NOT ADDED",
-  LIST_RETRIEVED: "LIST IS OKAY",
-  LIST_NOT_RETRIEVED: "LIST ERROR",
-  FILM_RENTED: "FILM RENTED",
-  FILM_NOT_RENTED: "FILM NOT RENTED",
+  FILM_ADDED: 'ADDED A NEW FILM',
+  FILM_NOT_ADDED: 'FILM NOT ADDED',
+  LIST_RETRIEVED: 'LIST IS OKAY',
+  LIST_NOT_RETRIEVED: 'LIST ERROR',
+  FILM_RENTED: 'FILM RENTED',
+  FILM_NOT_RENTED: 'FILM NOT RENTED',
 };
 
 export const addFilm = (values) => async (dispatch) => {
@@ -19,7 +19,6 @@ export const addFilm = (values) => async (dispatch) => {
       dispatch({ type: types.FILM_ADDED, payload: response.data });
     })
     .catch((err) => {
-      console.log("ERROR : " + err);
       dispatch({
         type: types.FILM_NOT_ADDED,
         payload: err,

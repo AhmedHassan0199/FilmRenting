@@ -1,4 +1,4 @@
-import { types } from "./action";
+import { types } from './action';
 
 const initState = {
   addFilm: {
@@ -17,7 +17,6 @@ const initState = {
 };
 
 export default function filmReducer(state = initState, action) {
-  console.log(action);
   switch (action.type) {
     case types.FILM_ADDED:
       return {
@@ -25,7 +24,7 @@ export default function filmReducer(state = initState, action) {
         film: action.payload,
         addFilm: {
           ...state.addFilm,
-          successMsg: "Film Added",
+          successMsg: 'Film Added',
         },
       };
     case types.FILM_NOT_ADDED:
@@ -33,7 +32,7 @@ export default function filmReducer(state = initState, action) {
         ...state,
         addFilm: {
           ...state.addFilm,
-          errorMsg: "Film not added , Something went wrong",
+          errorMsg: 'Film not added , Something went wrong',
         },
       };
     case types.LIST_RETRIEVED:
@@ -42,7 +41,7 @@ export default function filmReducer(state = initState, action) {
         filmList: {
           ...state.filmList,
           films: action.payload,
-          successMsg: "List is okay",
+          successMsg: 'List is okay',
         },
       };
     case types.LIST_NOT_RETRIEVED:
@@ -50,7 +49,7 @@ export default function filmReducer(state = initState, action) {
         ...state,
         filmList: {
           ...state.filmList,
-          errorMsg: "Error in getting the list",
+          errorMsg: 'Error in getting the list',
         },
       };
     case types.FILM_RENTED:
@@ -58,7 +57,7 @@ export default function filmReducer(state = initState, action) {
         ...state,
         filmRent: {
           ...state.filmRent,
-          successMsg: "Film Rented",
+          successMsg: 'Film Rented',
         },
       };
     case types.FILM_NOT_RENTED:
@@ -66,7 +65,7 @@ export default function filmReducer(state = initState, action) {
         ...state,
         filmRent: {
           ...state.filmRent,
-          errorMsg: "Renting Failed",
+          errorMsg: 'Renting Failed',
         },
       };
     default:

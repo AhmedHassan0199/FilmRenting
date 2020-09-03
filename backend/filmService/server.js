@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-const { port, mongoURI } = require('./utils/keys');
+const { port, mongoURI, USER_SERVICE_ENDPOINT } = require('./utils/keys');
 
 const app = express();
 
@@ -31,6 +31,9 @@ mongoose
 const filmRoutes = require('./routes/filmRoutes');
 
 app.use('/films', filmRoutes);
+app.get('/ping', (req, res) => {
+  return res.json({ success: true, port, mongoURI, USER_SERVICE_ENDPOINT });
+});
 
 app.listen(port, () => {
   console.log('server is running on port : ' + port);

@@ -25,6 +25,10 @@ const userRoutes = require('./routes/userRoutes');
 
 app.use('/users', userRoutes);
 
+app.get('/ping', (req, res) => {
+  return res.json({ success: true, port, mongoURI });
+});
+
 app.listen(port, () => {
   console.log('server is running on port : ' + port);
 });

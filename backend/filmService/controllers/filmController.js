@@ -1,29 +1,21 @@
-const {
-  ALREADY_EXIST,
-  BAD_REQUEST,
-  GOOD_REQUEST,
-} = require("../utils/httpCodes");
-const joi = require("joi");
-joi.objectId = require("joi-objectid")(joi);
-const { isFilmExists, createFilm, getAllFilms } = require("../repos/film");
-const stripe = require("stripe")(
-  "sk_test_51HMXmEIkP9PE94S848RFXHoMWYZmrJDeldoXDIP8Ph4EYcMV1uBB34tUqehnx2W1D004VU35RmtL86VEJMiP8hJ1009z3PX33r"
-);
-const { v4: uuidv4 } = require("uuid");
+const { ALREADY_EXIST, BAD_REQUEST, GOOD_REQUEST } = require('../utils/httpCodes');
+const joi = require('joi');
+joi.objectId = require('joi-objectid')(joi);
+const { isFilmExists, createFilm, getAllFilms } = require('../repos/film');
+const stripe = require('stripe')('sk_test_51HMXmEIkP9PE94S848RFXHoMWYZmrJDeldoXDIP8Ph4EYcMV1uBB34tUqehnx2W1D004VU35RmtL86VEJMiP8hJ1009z3PX33r');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports.addFilm = async (req, res) => {
   const { _id } = req.user;
   try {
     const isFilmFound = await isFilmExists(req.body.filmTitle);
     if (isFilmFound) {
-      return res.status(ALREADY_EXIST).json({ error: "Film already exists" });
+      return res.status(ALREADY_EXIST).json({ error: 'Film already exists' });
     }
     const createdFilm = await createFilm({ ...req.body, createdBy: _id });
-    return res
-      .status(GOOD_REQUEST)
-      .json({ status: createdFilm.filmTitle + "Is added" });
+    return res.status(GOOD_REQUEST).json({ status: createdFilm.filmTitle + 'Is added' });
   } catch (error) {
-    return res.status(BAD_REQUEST).json({ error: "Something went wrong" });
+    return res.status(BAD_REQUEST).json({ error: 'Something went wrong' });
   }
 };
 module.exports.getFilms = async (req, res) => {
@@ -31,13 +23,11 @@ module.exports.getFilms = async (req, res) => {
     const films = await getAllFilms();
     return res.status(GOOD_REQUEST).json(films);
   } catch (error) {
-    return res.status(BAD_REQUEST).json({ error: "Something went wrong" });
+    return res.status(BAD_REQUEST).json({ error: 'Something went wrong' });
   }
 };
 
 module.exports.rentFilm = async (req, res) => {
-  console.log("REQUEST :");
-  console.log(req.body);
   let error;
   let status;
 
@@ -51,7 +41,7 @@ module.exports.rentFilm = async (req, res) => {
     const charge = await stripe.charges.create(
       {
         amount: filmData.price * 100,
-        currency: "usd",
+        currency: 'usd',
         customer: customer.id,
         receipt_email: token.email,
         description: `Rented the ${filmData.filmTitle} film`,
@@ -70,12 +60,10 @@ module.exports.rentFilm = async (req, res) => {
         idempotency_key,
       }
     );
-    console.log("Charge : ", { charge });
-    status = "success";
+    status = 'success';
     res.status(GOOD_REQUEST).json(status);
   } catch (error) {
-    console.log(error);
-    status = "failure";
+    status = 'failure';
     res.status(BAD_REQUEST).json(status);
   }
 };

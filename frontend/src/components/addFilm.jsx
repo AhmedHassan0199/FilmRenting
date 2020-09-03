@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Input } from "../inputs";
-import { addFilm } from "../redux/film";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input } from '../inputs';
+import { addFilm } from '../redux/film';
+import { useForm } from 'react-hook-form';
 
 const AddFilm = () => {
   const {
@@ -15,14 +15,14 @@ const AddFilm = () => {
     getValues,
     formState,
   } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const dispatch = useDispatch();
 
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const addFilmStore = useSelector(({ filmReducer }) => filmReducer.filmList);
 
   useEffect(() => {
@@ -36,7 +36,6 @@ const AddFilm = () => {
   }, [addFilmStore.successMsg, addFilmStore.errorMsg]);
 
   const onSubmit = (formData) => {
-    console.log(formData);
     if (formState.isValid) {
       dispatch(addFilm(formData));
     }
@@ -46,9 +45,7 @@ const AddFilm = () => {
     <div className="container">
       <div className="col-md-6 mt-2 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="h3 mb-3 font-weight-normal">
-            Create a new film for rent
-          </h1>
+          <h1 className="h3 mb-3 font-weight-normal">Create a new film for rent</h1>
           {errorMsg && (
             <div className="alert alert-danger" role="alert">
               {errorMsg}
@@ -66,7 +63,7 @@ const AddFilm = () => {
               label="Film Title"
               errors={errors}
               register={register}
-              required={"Required!"}
+              required={'Required!'}
             />
           </div>
           <div className="form-group">
@@ -77,18 +74,11 @@ const AddFilm = () => {
               type="Number"
               errors={errors}
               register={register}
-              required={"Required!"}
+              required={'Required!'}
             />
           </div>
           <div className="form-group">
-            <Input
-              name="genre"
-              placeholder="Enter the genre"
-              label="Genre"
-              errors={errors}
-              register={register}
-              required={"Required!"}
-            />
+            <Input name="genre" placeholder="Enter the genre" label="Genre" errors={errors} register={register} required={'Required!'} />
           </div>
           <div className="form-group">
             <Input
@@ -98,14 +88,11 @@ const AddFilm = () => {
               errors={errors}
               type="date"
               register={register}
-              required={"Required!"}
+              required={'Required!'}
             />
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-lg btn-primary btn-block mb-2"
-          >
+          <button type="submit" className="btn btn-lg btn-primary btn-block mb-2">
             Add Film
           </button>
         </form>
